@@ -16,4 +16,7 @@ typedef struct {
     int currentScene;
 } Game;
 
+Game initGame(char *name, Player *player, Character *characters, int numCharacters, Scene *scenes, int numScenes);
+void startGame(Game *game);
+
 #endif
