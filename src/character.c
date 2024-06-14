@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "character.h"
+#include "window.h"
 
 // Function to create a new character
 Character *createCharacter(char *name, char *avator, char *icon) {
@@ -58,7 +59,7 @@ void destroyCharacter(Character *c) {
 
 // Function to make a character say something
 void say(Character c, char *message) {
-    printf("%s says: %s\n", c.name, message);
+    showDialogue(c, message);
 }
 
 // Function to make a character progress
