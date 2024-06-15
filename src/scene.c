@@ -4,7 +4,7 @@
 
 #include "scene.h"
 
-Scene *createScene(int id, char *name, char *description, char *background, Item *items, int numItems, Character *characters, int numCharacters, Option *options, int numOptions) {
+Scene *createScene(int id, char *name, char *description, char *background, Item *items, int numItems, CharacterPosition *characters, int numCharacters, Option *options, int numOptions) {
     Scene *s = malloc(sizeof(Scene));
     if (s == NULL) {
         return NULL;

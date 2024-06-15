@@ -10,7 +10,7 @@ typedef struct {
     Inventory *inventory;
 } Player;
 
-Player initPlayer(char *name, Inventory *inventory);
+Player *initPlayer(char *name, Inventory *inventory);
 void getItem(Player *player, Item *item);
 void dropItem(Player *player, Item *item);
 void useItem(Player *player, Item *item);

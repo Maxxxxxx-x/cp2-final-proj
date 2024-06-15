@@ -5,11 +5,11 @@
 #include "player.h"
 #include "item.h"
 
-Player initPlayer(char *name, Inventory *inventory) {
-    Player player;
-    player.name = name;
-    player.inventory = inventory;
-    player.inventory->items = (Item *)malloc(sizeof(Item) * inventory->maxItems);
+Player *initPlayer(char *name, Inventory *inventory) {
+    Player *player = (Player *)malloc(sizeof(Player));
+    player->name = name;
+    player->inventory = inventory;
+    player->inventory->items = (Item *)malloc(sizeof(Item) * inventory->maxItems);
     return player;
 }
 

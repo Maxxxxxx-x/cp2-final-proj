@@ -11,6 +11,16 @@ typedef struct {
     int nextSceneId;
 } Option;
 
+typedef enum{
+    LEFT,
+    RIGHT,
+} Position;
+
+typedef struct {
+    Character character;
+    Position pos;
+} CharacterPosition;
+
 typedef struct {
     int id;
     char *name;
@@ -18,13 +28,15 @@ typedef struct {
     char *background;
     Item *items;
     int numItems;
-    Character *characters;
+    Character speaker;
+    char *dialogue;
+    CharacterPosition *characters;
     int numCharacters;
     Option *options;
     int numOptions;
 } Scene;
 
-Scene *createScene(int id, char *name, char *description, char *background, Item *items, int numItems, Character *characters, int numCharacters, Option *options, int numOptions);
+Scene *createScene(int id, char *name, char *description, char *background, Item *items, int numItems, CharacterPosition *characters, int numCharacters, Option *options, int numOptions);
 Option *createOption(int id, char *description, int nextSceneId);
 
 #endif
