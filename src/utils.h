@@ -4,5 +4,6 @@
 #include <stdbool.h>
 
 bool fileExists(char *path);
+void downloadImage(char *url, char *path);
 
 #endif
