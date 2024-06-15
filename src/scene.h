@@ -6,6 +6,7 @@
 #include "item.h"
 
 typedef struct {
+    int id;
     char *name;
     char *description;
     char *background;
@@ -13,6 +14,12 @@ typedef struct {
     int numItems;
     Character *characters;
     int numCharacters;
+    Options *options;
 } Scene;
+
+typedef struct {
+    char *desciption;
+    int nextSceneId;
+} Options;
 
 #endif

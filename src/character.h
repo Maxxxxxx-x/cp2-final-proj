@@ -3,17 +3,22 @@
 #define _CHARACTER_H
 
 typedef struct {
+    char *id;
     char *name;
-    int progress;
+    int happiness;
+    int friendship;
     char *avator;
     char *icon;
+    char *description;
 } Character;
 
 char *getName(Character c);
-int getProgress(Character c);
-Character *createCharacter(char *name, char *avator, char *icon);
+int getHappiness(Character c);
+int getFriendship(Character c);
+Character *createCharacter(char *name, char *avator, char *icon, int happiness, int friendship, char *description);
 void destroyCharacter(Character *c);
 void say(Character c, char *message);
-void progress(Character *c, int amount);
+int changeHappiness(Character *c, int amount);
+int changeFriendship(Character *c, int amount);
 
 #endif

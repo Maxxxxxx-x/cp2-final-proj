@@ -6,13 +6,14 @@
 #include "window.h"
 
 // Function to create a new character
-Character *createCharacter(char *name, char *avator, char *icon) {
+Character *createCharacter(char *name, char *avator, char *icon, int happiness, int friendship, char *description) {
     Character *c = malloc(sizeof(Character));
     if (c == NULL) {
         return NULL;
     }
     
-    c->progress = 0;
+    c->happiness = happiness;
+    c->friendship = friendship;
 
     c->name = malloc(strlen(name) + 1);
     if (c->name == NULL) {
@@ -38,6 +39,16 @@ Character *createCharacter(char *name, char *avator, char *icon) {
     }
     strcpy(c->icon, icon);
 
+    c->description = malloc(strlen(description) + 1);
+    if (c->description == NULL) {
+        free(c->icon);
+        free(c->avator);
+        free(c->name);
+        free(c);
+        return NULL;
+    }
+    strcpy(c->description, description);
+
     return c;
 }
 
@@ -46,9 +57,14 @@ char *getName(Character c) {
     return c.name;
 }
 
-// Function to get the progress of a character
-int getProgress(Character c) {
-    return c.progress;
+// Function to get the happiness of a character
+int getHappiness(Character c) {
+    return c.happiness;
+}
+
+// Function to get the friendship of a character
+int getFriendship(Character c) {
+    return c.friendship;
 }
 
 // Function to destroy a character
@@ -62,7 +78,20 @@ void say(Character c, char *message) {
     showDialogue(c, message);
 }
 
-// Function to make a character progress
-void progress(Character *c, int amount) {
-    c->progress += amount;
+// Function to change the happiness of a character
+int changeHappiness(Character *c, int amount) {
+    c->happiness += amount;
+    if (c->happiness < 0) {
+        c->happiness = 0;
+    }
+    return c->happiness;
+}
+
+// Function to change the friendship of a character
+int changeFriendship(Character *c, int amount) {
+    c->friendship += amount;
+    if (c->friendship < 0) {
+        c->friendship = 0;
+    }
+    return c->friendship;
 }
