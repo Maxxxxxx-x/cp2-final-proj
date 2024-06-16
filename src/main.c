@@ -35,7 +35,7 @@ int main(int argc, char **argv){
     if (path[strlen(path) - 1] == '/'){
         path[strlen(path) - 1] = '\0';
     }
-    char *script = concat(path, "/script.yaml");
+    char *script = strcat(path, "/script.yaml");
     if (!fileExists(script)){
         printf("File %s does not exist!\n", script);
         return 1;
