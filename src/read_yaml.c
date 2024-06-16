@@ -79,8 +79,8 @@ void parse_yaml(FILE *file, char **title, Character *characters, int *num_charac
         yaml_parser_scan(&parser, &token);
         switch(token.type){
             case YAML_SCALAR_TOKEN:
-    printf("%s | %d\n", tk, status);
                 tk = (char *)token.data.scalar.value;
+    printf("%s|%d\n", tk, status);
                 if (strcmp(tk, "title") == 0){
                     status = 1;
                     break;
@@ -113,7 +113,7 @@ void parse_yaml(FILE *file, char **title, Character *characters, int *num_charac
                     case 2:
                         //characters
                         if (strcmp(tk, "id") == 0){
-                            characters = realloc(characters, (*(num_characters) + 1) * sizeof(Character));
+                            characters = realloc(characters, (*num_characters + 1) * sizeof(Character));
                             characters[*num_characters] = *createEmptyCharacter();
                             *num_characters++;
                             status = 11;
@@ -163,10 +163,6 @@ void parse_yaml(FILE *file, char **title, Character *characters, int *num_charac
                         }
                         if (strcmp(tk, "dialogue") == 0){
                             status = 26;
-                            break;
-                        }
-                        if (strcmp(tk, "characters") == 0){
-                            status = 27;
                             break;
                         }
                         break;
@@ -220,22 +216,18 @@ void parse_yaml(FILE *file, char **title, Character *characters, int *num_charac
                     case 11:
                         //characters.id
                         characters[*num_characters - 1].id = atoi(tk);
-                        status++;
                         break;
                     case 12:
                         //characters.name
                         characters[*num_characters - 1].name = strdup(tk);
-                        status++;
                         break;
                     case 13:
                         //characters.description
                         characters[*num_characters - 1].description = strdup(tk);
-                        status++;
                         break;
                     case 14:
                         //characters.sprite
                         characters[*num_characters - 1].icon = strdup(tk);
-                        status++;
                         break;
                     case 15:
                         //characters.mood
@@ -288,18 +280,6 @@ void parse_yaml(FILE *file, char **title, Character *characters, int *num_charac
                         }
                         if (strcmp(tk, "text") == 0){
                             status = 262;
-                            break;
-                        }
-                        break;
-                    case 27:
-                        //scenes.characters
-                        if (strcmp(tk, "name") == 0){
-                            scenes[*num_scenes - 1].characters = realloc(scenes[*num_scenes - 1].characters, (scenes[*num_scenes - 1].numCharacters + 1) * sizeof(CharacterPosition));
-                            status = 271;
-                            break;
-                        }
-                        if (strcmp(tk, "position") == 0){
-                            status = 272;
                             break;
                         }
                         break;
@@ -376,25 +356,6 @@ void parse_yaml(FILE *file, char **title, Character *characters, int *num_charac
                     case 262:
                         //scenes.dialogue.text
                         scenes[*num_scenes - 1].dialogue = strdup(tk);
-                        break;
-                    case 271:
-                        //scenes.characters.name
-                        for (int i = 0; i < num_characters; i++){
-                            if (strcmp(tk, characters[i].name) == 0){
-                                scenes[*num_scenes - 1].characters[scenes[*num_scenes - 1].numCharacters].character = characters[i];
-                                break;
-                            }
-                        }
-                        break;
-                    case 272:
-                        //scenes.characters.position
-                        if (strcmp(tk, "left") == 0){
-                            scenes[*num_scenes - 1].characters[scenes[*num_scenes - 1].numCharacters].pos = LEFT;
-                        }
-                        if (strcmp(tk, "right") == 0){
-                            scenes[*num_scenes - 1].characters[scenes[*num_scenes - 1].numCharacters].pos = RIGHT;
-                        }
-                        scenes[*num_scenes - 1].numCharacters++;
                         break;
                     case 521:
                         //open_dialogue.dialogue.model
