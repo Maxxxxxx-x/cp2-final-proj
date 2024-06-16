@@ -200,7 +200,6 @@ int renderMainMenu(char *gameName) {
         return 0;
     }
     if (strcmp(selectedOption, "Options")) {
-        renderOptions(scene);
         return 0;
     }
 

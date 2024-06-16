@@ -1,8 +1,9 @@
-#include <yaml.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+
+#include "../include/yaml/include/yaml.h"
 #include "inventory.h"
 #include "character.h"
 #include "player.h"

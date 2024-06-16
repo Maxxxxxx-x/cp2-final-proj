@@ -12,8 +12,8 @@ void saveGame(Game *game, char *path) {
     cJSON *inventory = cJSON_CreateArray();
     for (int i = 0; i < game->player->inventory->numItems; i++) {
         cJSON *item = cJSON_CreateObject();
-        cJSON_AddStringToObject(item, "name", game->player->inventory->items[i].name);
-        cJSON_AddNumberToObject(item, "amount", game->player->inventory->items[i].amount);
+        cJSON_AddStringToObject(item, "name", game->player->inventory->items[i]->name);
+        cJSON_AddNumberToObject(item, "amount", game->player->inventory->items[i]->amount);
         cJSON_AddItemToArray(inventory, item);
     }
     cJSON_AddItemToObject(root, "inventory", inventory);
@@ -74,8 +74,8 @@ void loadGame(Game *game, char *path){
     cJSON *inventory = cJSON_GetObjectItem(root, "inventory");
     for (int i = 0; i < cJSON_GetArraySize(inventory); i++) {
         cJSON *item = cJSON_GetArrayItem(inventory, i);
-        game->player->inventory->items[i].name = cJSON_GetObjectItem(item, "name")->valuestring;
-        game->player->inventory->items[i].amount = cJSON_GetObjectItem(item, "amount")->valueint;
+        game->player->inventory->items[i]->name = cJSON_GetObjectItem(item, "name")->valuestring;
+        game->player->inventory->items[i]->amount = cJSON_GetObjectItem(item, "amount")->valueint;
     }
     cJSON *characters = cJSON_GetObjectItem(root, "characters");
     for (int i = 0; i < cJSON_GetArraySize(characters); i++) {

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 
-//#include "UIController.h"
+#include "window.h"
 #include "inventory.h"
 #include "character.h"
 #include "player.h"
