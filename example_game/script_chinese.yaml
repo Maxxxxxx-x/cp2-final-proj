@@ -9,6 +9,7 @@ characters:
     mood:
       happiness: 50
       friendship: 50
+    avator: "images/mike.png"
   - id: jess
     name: "潔西"
     description: "一位喜愛自然的公園愛好者。"
@@ -16,6 +17,7 @@ characters:
     mood:
       happiness: 50
       friendship: 50
+    avatar: "images/jess.png"
   - id: tony
     name: "托尼"
     description: "一位從公園汲取靈感的當地藝術家。"
@@ -23,6 +25,7 @@ characters:
     mood:
       happiness: 50
       friendship: 50
+    avatar: "images/tony.png"
 scenes:
   - id: 1
     name: "籃球場"
@@ -68,7 +71,6 @@ scenes:
         position: "left"
     dialogue:
       speaker: "麥克"
-      portrait: "images/mike.png"
       text: "嘿！想組隊打一場嗎？"
     options:
       - description: "好啊，一起玩！"
@@ -84,7 +86,6 @@ scenes:
         position: "right"
     dialogue:
       speaker: "托尼"
-      portrait: "images/tony.png"
       text: "你打得不錯。想學個新技巧嗎？"
     options:
       - description: "學習技巧"
@@ -100,7 +101,6 @@ scenes:
         position: "left"
     dialogue:
       speaker: "潔西"
-      portrait: "images/jess.png"
       text: "嗨！我愛這裡的寧靜。你呢？"
     options:
       - description: "我也愛這裡。"
@@ -116,7 +116,6 @@ scenes:
         position: "right"
     dialogue:
       speaker: "托尼"
-      portrait: "images/tony.png"
       text: "嘿！我正在畫風景。想看看嗎？"
     options:
       - description: "當然！"

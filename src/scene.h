@@ -36,6 +36,8 @@ typedef struct {
     int numOptions;
 } Scene;
 
+Scene *createEmptyScene();
+Option *createEmptyOption();
 Scene *createScene(int id, char *name, char *description, char *background, Item *items, int numItems, Character speaker, char *dialogue, CharacterPosition *characters, int numCharacters, Option *options, int numOptions);
 Option *createOption(int id, char *description, int nextSceneId);
 

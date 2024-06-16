@@ -12,6 +12,7 @@ typedef struct {
     char *description;
 } Character;
 
+Character *createEmptyCharacter();
 char *getName(Character c);
 int getHappiness(Character c);
 int getFriendship(Character c);
