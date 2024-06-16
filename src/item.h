@@ -2,13 +2,7 @@
 #ifndef _ITEM_H
 #define _ITEM_H
 
-typedef struct {
-    char *id;
-    char *name;
-    int amount;
-    char *image;
-    char *description;
-} Item;
+#include "../Script/read_yaml.h"
 
 Item *createEmptyItem();
 Item *createItem(char *name, char *description, int amount, char *image);

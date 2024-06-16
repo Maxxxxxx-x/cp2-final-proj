@@ -7,6 +7,18 @@
 
 #include "game.h"
 #include "utils.h"
+#include "inventory.h"
+#include "character.h"
+#include "player.h"
+#include "scene.h"
+#include "item.h"
+#include "../Script/read_yaml.h"
+
+extern Character characters[3];
+extern Option options[37];
+extern Dialogue dialogues[4];
+extern CharacterPosition characterPosition[16];
+extern Scene scenes[23];
 
 struct option long_options[] = {
     {"help", no_argument, 0, 'h'},
@@ -37,16 +49,17 @@ int main(int argc, char **argv){
     if (path[strlen(path) - 1] == '/'){
         path[strlen(path) - 1] = '\0';
     }
-    char *script = strcat(path, "/script.yaml");
+    char *script = strcat(path, "/script_chinese.yaml");
     if (!fileExists(script)){
         printf("File %s does not exist!\n", script);
         return 1;
     }
-    //parse script
-    //init game
-    //start game
-
-
+    char *title = "Court Adventures";
+    int numCharacters, numScenes;
+    Inventory inventory;
+    Game game = initGame(title, characters, sizeof(characters), scenes, sizeof(scenes), &inventory);
+    //startGame(&game);
 
     return 0;
 }
+

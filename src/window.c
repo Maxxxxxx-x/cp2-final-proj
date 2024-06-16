@@ -8,8 +8,8 @@
 #include "utils.h"
 #include "window.h"
 
-#define NOTO_SANS "./../assets/fonts/NotoSans-Regular.ttf"
-#define SAVE_PATH "./../assets/saves"
+#define NOTO_SANS "assets/fonts/NotoSans-Regular.ttf"
+#define SAVE_PATH "assets/saves"
 
 int widthG;
 int heightG;
@@ -50,8 +50,8 @@ typedef struct {
     bool ended;
 } OptionsState;
 
-char *options[] = {"Start", "Continue", "Load Save", "Options", "Exit"};
-Options mainMenuOptions = {options, 5};
+char *options1[] = {"Start", "Continue", "Load Save", "Options", "Exit"};
+Options mainMenuOptions = {options1, 5};
 OptionsState mainMenuState = {&mainMenuOptions, 0};
 
 void closeAndExit() {
@@ -437,7 +437,7 @@ int renderCharacter(Character character, CharacterPosition position) {
     SDL_RenderClear(renderer);
     SDL_RenderCopy(renderer, background, NULL, &bgRect);
     SDL_RenderPresent(renderer);
-    printf("eendered %s as background\n", character.avator);
+    printf("rendered %s as background\n", character.avator);
     SDL_DestroyTexture(background);
 
     return 0;

@@ -4,6 +4,8 @@
 #include <dirent.h>
 
 #include "save.h"
+#include "game.h"
+#include "../Script/read_yaml.h"
 #include "../include/cJSON.h"
 
 void saveGame(Game *game, char *path) {

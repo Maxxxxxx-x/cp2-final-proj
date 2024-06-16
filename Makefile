@@ -1,16 +1,5 @@
-CC=gcc
-CFLAGS=-Ipath/to/libyaml/include
-LDFLAGS=-lyaml -lcurl -lSDL2 -lSDL2_image
-TARGET=engine
-OBJECTS=$(wildcard *.c)
-
-all: $(TARGET)
-
-$(TARGET): $(OBJECTS)
-    $(CC) $(OBJECTS) -o $(TARGET) $(LDFLAGS)
-
-%.o: %.c
-    $(CC) -c $< $(CFLAGS) -o $@
+all:
+	gcc ./src/main.c ./src/utils.c ./src/window.c ./src/save.c ./src/game.c ./src/player.c ./Script/yaml_init.c ./src/inventory.c ./src/scene.c ./src/item.c ./src/character.c ./include/cJSON.c -I ./include/yaml/include/ -L ./include/yaml/lib/ -lyaml -lcurl -lSDL2 -lSDL2main -lSDL2_image -lSDL2_ttf -o engine
 
 clean:
-    rm -f $(OBJECTS:.c=.o) $(TARGET)
+	rm -f ./engine

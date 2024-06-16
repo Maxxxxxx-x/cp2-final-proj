@@ -22,6 +22,8 @@ Game initGame(char *name, Character *characters, int numCharacters, Scene *scene
     game.currentScene = 0;
 
     createWindow(&game, game.name, HEIGHT, WIDTH);
+    renderMainMenu(game.name);
+    handleEvent(game);
 
     return game;
 }
@@ -33,13 +35,13 @@ void startGame(Game *game){
     do{
         //renderScene(game->scenes[game->currentScene]);
         if (strlen(game->scenes[game->currentScene].dialogue) > 0){
-            //showDialogue(game->scenes[game->currentScene].speaker, game->scenes[game->currentScene].dialogue);
-            printf("%s: %s\n", game->scenes[game->currentScene].speaker.name, game->scenes[game->currentScene].dialogue);
+            //renderDialogue(game->scenes[game->currentScene].speaker[0], game->scenes[game->currentScene].dialogue);
+            printf("%s: %s\n", game->scenes[game->currentScene].speaker[0].name, game->scenes[game->currentScene].dialogue);
         }
         Option option;
         if (game->scenes[game->currentScene].numOptions > 0){
-            //option = renderOptions(game->scenes[game->currentScene].options, game->scenes[game->currentScene].numOptions);
-            option = game->scenes[game->currentScene].options[0];
+            //renderOptions(game->scenes[game->currentScene].options, game->scenes[game->currentScene].numOptions);
+            option = *(game->scenes[game->currentScene].options[0]);
         }
         game->currentScene = option.nextSceneId - 1;
     } while (game->currentScene != 0);

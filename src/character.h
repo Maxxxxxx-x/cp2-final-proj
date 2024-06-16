@@ -2,15 +2,7 @@
 #ifndef _CHARACTER_H
 #define _CHARACTER_H
 
-typedef struct {
-    char *id;
-    char *name;
-    int happiness;
-    int friendship;
-    char *avator;
-    char *icon;
-    char *description;
-} Character;
+#include "../Script/read_yaml.h"
 
 Character *createEmptyCharacter();
 char *getName(Character c);

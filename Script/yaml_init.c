@@ -5,9 +5,9 @@
 #include "read_yaml.h"
 
 Character characters[3] = {
-{1, "Mike", "A passionate basketball player.", "images/mike_sprite.png", 50, 50},
-{1, "Jess", "A park enthusiast who loves nature.", "images/jess_sprite.png", 50, 50},
-{1, "Tony", "A local artist who draws inspiration from the park.", "images/tony_sprite.png", 50, 50}
+{"1", "Mike", "A passionate basketball player.", "images/mike_sprite.png", 50, 50, "images/mike.png"},
+{"2", "Jess", "A park enthusiast who loves nature.", "images/jess_sprite.png", 50, 50, "images/jeff.png"},
+{"3", "Tony", "A local artist who draws inspiration from the park.", "images/tony_sprite.png", 50, 50, "images/tony.png"}
 };
 Option options[37] = {
 {"Play basketball", 2},
@@ -54,46 +54,47 @@ Dialogue dialogues[4] = {
 {"Jess", "images/jess.png", "Hi! I love the tranquility here. How about you?"},//6
 {"Tony", "images/tony.png", "Hey! I'm sketching the scenery. Want to see?"}//7
 };
-Actor actor[16] = {
-{1, "left"},
-{2, "left"},
-{3, "right"},
-{1, "left"},
-{3, "right"},
-{2, "left"},
-{3, "right"},
-{1, "left"},
-{3, "right"},
-{2, "left"},
-{2, "left"},
-{3, "right"},
-{2, "left"},
-{2, "left"},
-{3, "right"},
-{3, "right"}
+CharacterPosition characterPosition[16] = {
+{&characters[0], LEFT},
+{&characters[1], LEFT},
+{&characters[2], RIGHT},
+{&characters[0], LEFT},
+{&characters[2], RIGHT},
+{&characters[1], LEFT},
+{&characters[2], RIGHT},
+{&characters[0], LEFT},
+{&characters[2], RIGHT},
+{&characters[1], LEFT},
+{&characters[1], LEFT},
+{&characters[2], RIGHT},
+{&characters[1], LEFT},
+{&characters[1], LEFT},
+{&characters[2], RIGHT},
+{&characters[2], RIGHT}
 };
+
 Scene scenes[23] = {
-{1, "Basketball Court", "You are at the basketball court, ready to shoot some hoops.", "images/basketball_court.png", {&options[0], &options[1]}, 2, NULL, 0, {NULL, NULL}, 0},
-{2, "Playing Basketball", "You start playing basketball. Mike joins you.", "images/basketball_court.png", {&options[2], &options[3]}, 2, NULL, 0, {&actor[0], NULL}, 1},
-{3, "Park", "The park is serene with a few people strolling around.", "images/park.png", {&options[4], &options[5]}, 2, NULL, 0, {&actor[1], &actor[2]}, 2},
-{4, "Talking to Mike", "You start a conversation with Mike.", "images/basketball_court.png", {&options[6], &options[7]}, 2, &dialogues[0], 1, {&actor[3], NULL}, 1},
-{5, "Playing Alone", "You keep playing alone. A mysterious figure approaches.", "images/basketball_court.png", {&options[8], &options[9]}, 2, &dialogues[1], 1, {&actor[4], NULL}, 1},
-{6, "Talking to Jess", "You strike up a conversation with Jess.", "images/park.png", {&options[10], &options[11]}, 2, &dialogues[2], 1, {&actor[5], NULL}, 1},
-{7, "Talking to Tony", "You start a conversation with Tony.", "images/park.png", {&options[12], &options[13]}, 2, &dialogues[3], 1, {&actor[6], NULL}, 1},
-{8, "Game with Mike", "You have a fun game with Mike. You both feel closer.", "images/basketball_court.png", {&options[14], &options[15]}, 2, NULL, 0, {&actor[7], NULL}, 1},
-{9, "Walking Away", "You walk away, feeling unsure about your decision.", "images/basketball_court.png", {&options[16], &options[17]}, 2, NULL, 0, {NULL, NULL}, 0},
-{10, "Learning a Trick", "Tony teaches you a cool trick. You feel more skilled.", "images/basketball_court.png", {&options[18], &options[19]}, 2, NULL, 0, {&actor[8], NULL}, 1},
-{11, "Peaceful Chat", "You and Jess enjoy a peaceful chat. You feel relaxed.", "images/park.png", {&options[20], &options[21]}, 2, NULL, 0, {&actor[9], NULL}, 1},
-{12, "Different Interests", "You and Jess realize you have different interests.", "images/park.png", {&options[22], &options[23]}, 2, NULL, 0, {&actor[10], NULL}, 1},
-{13, "Admiring Art", "You admire Tony's sketches. You feel inspired.", "images/park.png", {&options[24], &options[25]}, 2, NULL, 0, {&actor[11], NULL}, 1},
-{14, "Later with Tony", "You decide to talk to Tony later.", "images/park.png", {&options[26], &options[27]}, 2, NULL, 0, {NULL, NULL}, 0},
-{15, "Friendly Bond", "You feel a stronger bond with your new friends.", "images/basketball_court.png", {&options[28], NULL}, 1, NULL, 0, {NULL, NULL}, 0},
-{16, "End of the Day", "You decide to end the day.", "images/sunset.png", {&options[29], NULL}, 1, NULL, 0, {NULL, NULL}, 0},
-{17, "Deep Conversation", "You have a deep conversation with Jess.", "images/park.png", {&options[30], NULL}, 1, NULL, 0, {&actor[12], NULL}, 1},
-{18, "Walking in the Park", "You enjoy a walk in the park, feeling refreshed.", "images/park_path.png", {&options[31], NULL}, 1, NULL, 0, {NULL, NULL}, 0},
-{19, "Finding Common Ground", "You and Jess find something you both enjoy.", "images/park.png", {&options[32], NULL}, 1, NULL, 0, {&actor[13], NULL}, 1},
-{20, "Artistic Compliment", "Tony appreciates your compliment and feels motivated.", "images/park.png", {&options[33], NULL}, 1, NULL, 0, {&actor[14], NULL}, 1},
-{21, "Inspiration Talk", "Tony talks about his inspiration, and you feel inspired.", "images/park.png", {&options[34], NULL}, 1, NULL, 0, {&actor[15], NULL}, 1},
-{22, "Day End", "The day ends with a sense of accomplishment.", "images/sunset.png", {&options[35], NULL}, 1, NULL, 0, {NULL, NULL}, 0},
-{23, "Reflection", "You reflect on the day's events.", "images/sunset.png", {&options[36], NULL}, 1, NULL, 0, {NULL, NULL}, 0}
+{1, "Basketball Court", "You are at the basketball court, ready to shoot some hoops.", "images/basketball_court.png",  NULL, 0, {&options[0], &options[1]}, 2, NULL, NULL, {NULL, NULL}, 0},
+{2, "Playing Basketball", "You start playing basketball. Mike joins you.", "images/basketball_court.png",  NULL, 0, {&options[2], &options[3]}, 2, NULL, NULL, {&characterPosition[0], NULL}, 1},
+{3, "Park", "The park is serene with a few people strolling around.", "images/park.png",  NULL, 0, {&options[4], &options[5]}, 2, NULL, NULL, {&characterPosition[1], &characterPosition[2]}, 2},
+{4, "Talking to Mike", "You start a conversation with Mike.", "images/basketball_court.png",  NULL, 0, {&options[6], &options[7]}, 2, &characters[0], "Hey! Want to team up for a game?", {&characterPosition[3], NULL}, 1},
+{5, "Playing Alone", "You keep playing alone. A mysterious figure approaches.", "images/basketball_court.png",  NULL, 0, {&options[8], &options[9]}, 2, &characters[2], "You have some good moves. Want to learn a trick?", {&characterPosition[4], NULL}, 1},
+{6, "Talking to Jess", "You strike up a conversation with Jess.", "images/park.png",  NULL, 0, {&options[10], &options[11]}, 2, &characters[1], "Hi! I love the tranquility here. How about you?", {&characterPosition[5], NULL}, 1},
+{7, "Talking to Tony", "You start a conversation with Tony.", "images/park.png",  NULL, 0, {&options[12], &options[13]}, 2, &characters[2], "Hey! I'm sketching the scenery. Want to see?", {&characterPosition[6], NULL}, 1},
+{8, "Game with Mike", "You have a fun game with Mike. You both feel closer.", "images/basketball_court.png",  NULL, 0, {&options[14], &options[15]}, 2, NULL, NULL, {&characterPosition[7], NULL}, 1},
+{9, "Walking Away", "You walk away, feeling unsure about your decision.", "images/basketball_court.png",  NULL, 0, {&options[16], &options[17]}, 2, NULL,  NULL, {NULL, NULL}, 0},
+{10, "Learning a Trick", "Tony teaches you a cool trick. You feel more skilled.", "images/basketball_court.png",  NULL, 0, {&options[18], &options[19]}, 2, NULL, NULL, {&characterPosition[8], NULL}, 1},
+{11, "Peaceful Chat", "You and Jess enjoy a peaceful chat. You feel relaxed.", "images/park.png",  NULL, 0, {&options[20], &options[21]}, 2, NULL, NULL, {&characterPosition[9], NULL}, 1},
+{12, "Different Interests", "You and Jess realize you have different interests.", "images/park.png",  NULL, 0, {&options[22], &options[23]}, 2, NULL, NULL, {&characterPosition[10], NULL}, 1},
+{13, "Admiring Art", "You admire Tony's sketches. You feel inspired.", "images/park.png",  NULL, 0, {&options[24], &options[25]}, 2, NULL, NULL, {&characterPosition[11], NULL}, 1},
+{14, "Later with Tony", "You decide to talk to Tony later.", "images/park.png",  NULL, 0, {&options[26], &options[27]}, 2, NULL,  NULL, {NULL, NULL}, 0},
+{15, "Friendly Bond", "You feel a stronger bond with your new friends.", "images/basketball_court.png",  NULL, 0, {&options[28], NULL}, 1, NULL,  NULL, {NULL, NULL}, 0},
+{16, "End of the Day", "You decide to end the day.", "images/sunset.png",  NULL, 0, {&options[29], NULL}, 1, NULL,  NULL, {NULL, NULL}, 0},
+{17, "Deep Conversation", "You have a deep conversation with Jess.", "images/park.png",  NULL, 0, {&options[30], NULL}, 1, NULL, NULL, {&characterPosition[12], NULL}, 1},
+{18, "Walking in the Park", "You enjoy a walk in the park, feeling refreshed.", "images/park_path.png",  NULL, 0, {&options[31], NULL}, 1, NULL,  NULL, {NULL, NULL}, 0},
+{19, "Finding Common Ground", "You and Jess find something you both enjoy.", "images/park.png",  NULL, 0, {&options[32], NULL}, 1, NULL, NULL, {&characterPosition[13], NULL}, 1},
+{20, "Artistic Compliment", "Tony appreciates your compliment and feels motivated.", "images/park.png",  NULL, 0, {&options[33], NULL}, 1, NULL, NULL, {&characterPosition[14], NULL}, 1},
+{21, "Inspiration Talk", "Tony talks about his inspiration, and you feel inspired.", "images/park.png",  NULL, 0, {&options[34], NULL}, 1, NULL, NULL, {&characterPosition[15], NULL}, 1},
+{22, "Day End", "The day ends with a sense of accomplishment.", "images/sunset.png",  NULL, 0, {&options[35], NULL}, 1, NULL,  NULL, {NULL, NULL}, 0},
+{23, "Reflection", "You reflect on the day's events.", "images/sunset.png",  NULL, 0, {&options[36], NULL}, 1, NULL,  NULL, {NULL, NULL}, 0}
 };

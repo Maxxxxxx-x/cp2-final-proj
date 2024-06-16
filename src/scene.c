@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "../Script/read_yaml.h"
 #include "character.h"
 #include "scene.h"
 
@@ -17,17 +18,16 @@ Scene *createEmptyScene() {
     s->description = NULL;
     s->background = NULL;
     
-    s->items = NULL;
-    s->numItems = 0;
-    
-    s->speaker = *createEmptyCharacter();
+    s->speaker = createEmptyCharacter();
     
     s->dialogue = NULL;
     
-    s->characters = NULL;
+    s->characters[0] = NULL;
+    s->characters[1] = NULL;
     s->numCharacters = 0;
     
-    s->options = NULL;
+    s->options[0] = NULL;
+    s->options[1] = NULL;
     s->numOptions = 0;
     
     return s;
@@ -38,8 +38,6 @@ Option *createEmptyOption() {
     if (o == NULL) {
         return NULL;
     }
-    
-    o->id = -1;
     
     o->description = NULL;
     
@@ -83,7 +81,7 @@ Scene *createScene(int id, char *name, char *description, char *background, Item
     s->items = items;
     s->numItems = numItems;
 
-    s->speaker = speaker;
+    s->speaker = &speaker;
 
     s->dialogue = malloc(strlen(dialogue) + 1);
     if (s->dialogue == NULL) {
@@ -95,24 +93,22 @@ Scene *createScene(int id, char *name, char *description, char *background, Item
     }
     strcpy(s->dialogue, dialogue);
     
-    s->characters = malloc(sizeof(CharacterPosition) * numCharacters);
-    s->characters = characters;
+    s->characters[0] = malloc(sizeof(CharacterPosition) * numCharacters);
+    s->characters[0] = characters;
     s->numCharacters = numCharacters;
     
-    s->options = malloc(sizeof(Option) * numOptions);
-    s->options = options;
+    s->options[0] = malloc(sizeof(Option) * numOptions);
+    s->options[0] = options;
     s->numOptions = numOptions;
     
     return s;
 }
 
-Option *createOption(int id, char *description, int nextSceneId) {
+Option *createOption(char *description, int nextSceneId) {
     Option *o = malloc(sizeof(Option));
     if (o == NULL) {
         return NULL;
     }
-    
-    o->id = id;
     
     o->description = malloc(strlen(description) + 1);
     if (o->description == NULL) {

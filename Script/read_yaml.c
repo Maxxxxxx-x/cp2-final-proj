@@ -6,7 +6,7 @@
 extern Character characters[3];
 extern Option options[37];
 extern Dialogue dialogues[4];
-extern Actor actor[16];
+extern CharacterPosition characterPosition[16];
 extern Scene scenes[23];
 
 int main() {
@@ -42,7 +42,7 @@ void parse_yaml(FILE *file, Character characters[], int *num_characters, Scene s
     int current_character = -1;
     int current_scene = -1;
     int current_option = -1;
-
+/*
     while (!done) {
         if (!yaml_parser_parse(&parser, &event)) {
             printf("Parser error %d\n", parser.error);
@@ -138,7 +138,7 @@ void parse_yaml(FILE *file, Character characters[], int *num_characters, Scene s
                         yaml_event_delete(&value_event);
                     }
                 } else if (state == SCENE) {
-                    /*if (strcmp((char *)event.data.scalar.value, "id") == 0) {
+                    if (strcmp((char *)event.data.scalar.value, "id") == 0) {
                         yaml_event_t value_event;
                         yaml_parser_parse(&parser, &value_event);
                         scenes[current_scene].id = atoi((char *)value_event.data.scalar.value);
@@ -161,7 +161,7 @@ void parse_yaml(FILE *file, Character characters[], int *num_characters, Scene s
                         strncpy(scenes[current_scene].background, (char *)value_event.data.scalar.value, 100);
                         scenes[current_scene].background[100] = '\0';
                         yaml_event_delete(&value_event);
-                    }*/
+                    }
                 } else if (state == OPTION) {
                     if (state == CHARACTERS && strcmp((char *)event.data.scalar.value, "scenes") == 0)
                         state = SCENES;
@@ -173,7 +173,7 @@ void parse_yaml(FILE *file, Character characters[], int *num_characters, Scene s
 
         done = (event.type == YAML_STREAM_END_EVENT);
         yaml_event_delete(&event);
-    }
+    }*/
 
     yaml_parser_delete(&parser);
 }
@@ -181,7 +181,7 @@ void parse_yaml(FILE *file, Character characters[], int *num_characters, Scene s
 
 void print_script(Character characters[], int num_characters, Scene scenes[], int num_scenes) {
        
-    
+    /*
     for (int i = 0; i < num_characters; i++) {
         printf("Character %d:\n", characters[i].id);
         printf("  Name: %s\n", characters[i].name);
@@ -208,5 +208,5 @@ void print_script(Character characters[], int num_characters, Scene scenes[], in
             printf("      Description: %s\n", scenes[i].options[j]->description);
             printf("      Next Scene: %d\n", scenes[i].options[j]->next_scene);
         }
-    }
+    }*/
 }
