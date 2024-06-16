@@ -159,6 +159,7 @@ int renderMainMenu(char *gameName) {
 
     for (int i = 0; i < mainMenuOptions.count; i++) {
         optionRect.x = (widthG - TTF_RenderText_Solid(font, mainMenuOptions.items[i], gray)->w) / 2;
+
         optionRect.y = 500 + (i * 50);
         optionRect.w = TTF_RenderText_Solid(font, mainMenuOptions.items[i], gray)->w;
         optionRect.h = TTF_RenderText_Solid(font, mainMenuOptions.items[i], gray)->h;
@@ -199,7 +200,7 @@ int renderMainMenu(char *gameName) {
         return 0;
     }
     if (strcmp(selectedOption, "Options")) {
-        renderOptions();
+        renderOptions(scene);
         return 0;
     }
 
@@ -411,6 +412,33 @@ int renderBackground(char *imagePath) {
     SDL_RenderCopy(renderer, background, NULL, &bgRect);
     SDL_RenderPresent(renderer);
     printf("eendered %s as background\n", imagePath);
+    SDL_DestroyTexture(background);
+
+    return 0;
+}
+
+int renderCharacter(Character character, CharacterPosition position) {
+    if (!fileExists(character.avator)) {
+        printf("window.h::renderBackground::image %s does not exists\n", character.avator);
+        return -1;
+    }
+
+    SDL_Point imageSize;
+    background = IMG_LoadTexture(renderer, character.avator);
+    SDL_QueryTexture(background, NULL, NULL, &imageSize.x, &imageSize.y);
+
+    printf("Width: %d | Height: %d\n", imageSize.x, imageSize.y);
+
+    SDL_Rect bgRect;
+    bgRect.x = (position.pos == LEFT) ? 150 : 950;
+    bgRect.y = (heightG / imageSize.y) / 2;
+    bgRect.w = widthG;
+    bgRect.h = heightG;
+
+    SDL_RenderClear(renderer);
+    SDL_RenderCopy(renderer, background, NULL, &bgRect);
+    SDL_RenderPresent(renderer);
+    printf("eendered %s as background\n", character.avator);
     SDL_DestroyTexture(background);
 
     return 0;
