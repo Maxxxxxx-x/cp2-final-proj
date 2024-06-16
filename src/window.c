@@ -9,9 +9,12 @@
 #include "window.h"
 
 #define NOTO_SANS "./../assets/fonts/NotoSans-Regular.ttf"
+#define SAVE_PATH "./../assets/saves"
 
 int widthG;
 int heightG;
+
+Game *gameG;
 
 SDL_Event event;
 SDL_Window *window;
@@ -98,7 +101,8 @@ void handleKeyEvents(OptionsState *state) {
     return;
 }
 
-int createWindow(char *gameName, int width, int height) {
+int createWindow(Game *game, char *gameName, int width, int height) {
+    gameG = game;
     widthG = width;
     heightG = height;
     if (!fileExists(NOTO_SANS)) {
@@ -181,22 +185,19 @@ int renderMainMenu(char *gameName) {
     if (strcmp(selectedOption, "Start")) {
         return 0;
     }
-
     if (strcmp(selectedOption, "Continue")) {
         int fileCount = 0;
-        getSaveFiles("./../assets/saves", &fileCount);
+        getSaveFiles(SAVE_PATH, &fileCount);
         if (fileCount == 0) {
             puts("No saves found!");
             return -1;
         }
         return 0;
     }
-
     if (strcmp(selectedOption, "Load Save")) {
         renderSavedMenu();
         return 0;
     }
-
     if (strcmp(selectedOption, "Options")) {
         renderOptions();
         return 0;
@@ -211,7 +212,7 @@ int renderMainMenu(char *gameName) {
 
 int renderSavedMenu() {
     int fileCount = 0;
-    char **saveFileNames = getSaveFiles("./../assets/saves", &fileCount);
+    char **saveFileNames = getSaveFiles(SAVE_PATH, &fileCount);
 
     SDL_Rect rect;
     rect.x = 250;
@@ -232,7 +233,7 @@ int renderSavedMenu() {
 
     SDL_Rect optionRect;
 
-    Options savedMenuOptions = {saveFileNames, 5};
+    Options savedMenuOptions = {saveFileNames, fileCount};
     OptionsState savedMenuState = {&savedMenuOptions, 0};
 
     for (int i = 0; i < fileCount; i++) {
@@ -259,11 +260,13 @@ int renderSavedMenu() {
 
     SDL_RenderPresent(renderer);
     handleKeyEvents(&savedMenuState);
+    char *fileName = saveFileNames[savedMenuState.selectedIndex];
+    loadGame(gameG, fileName);
+
     return 0;
 }
 
 int renderPauseMenu() {
-
     if (isMainMenuShown) {
         printf("widnow.h::renderPauseMenu::main menu is being shown");
         return -1;
@@ -310,12 +313,74 @@ int renderPauseMenu() {
 
     SDL_RenderPresent(renderer);
     handleKeyEvents(&pauseMenuState);
+    char *selectedOption = mainMenuOptions.items[mainMenuState.selectedIndex];
+    if (strcmp(selectedOption, "Resume")) {
+        return 0;
+    }
+    if (strcmp(selectedOption, "Quick Save")) {
+        saveGame(gameG, SAVE_PATH);
+        return 0;
+    }
+    if (strcmp(selectedOption, "Load Save")) {
+        renderSavedMenu();
+        return 0;
+    }
 
+    if (strcmp(selectedOption, "Exit")) {
+        closeAndExit();
+    }
     return 0;
 }
 
-int renderOptions() {}
-int renderInput() {}
+int renderOptions(Scene scene) {
+
+    SDL_Rect rect;
+    rect.x = 500;
+    rect.y = 250;
+    rect.w = 200;
+    rect.h = 200;
+
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    SDL_RenderDrawRect(renderer, &rect);
+
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    SDL_RenderPresent(renderer);
+
+    SDL_Rect optionRect;
+    Options pauseMenuOptions = {&scene.dialogue, 4};
+    OptionsState pauseMenuState = {&pauseMenuOptions, 0};
+
+    for (int i = 0; i < pauseMenuOptions.count; i++) {
+        optionRect.x =
+            (widthG - TTF_RenderText_Solid(font, pauseMenuOptions.items[i], gray)->w) / 2;
+        optionRect.y = 500 + (i * 50);
+        optionRect.w = TTF_RenderText_Solid(font, pauseMenuOptions.items[i], gray)->w;
+        optionRect.h = TTF_RenderText_Solid(font, pauseMenuOptions.items[i], gray)->h;
+
+        if (i == pauseMenuState.selectedIndex) {
+            SDL_SetRenderDrawColor(renderer, green.r, green.g, green.b, 255);
+        } else {
+            SDL_SetRenderDrawColor(renderer, gray.r, gray.g, gray.b, 255);
+        }
+
+        SDL_Surface *optionSurface = TTF_RenderText_Solid(
+            font, pauseMenuOptions.items[i], (i == pauseMenuState.selectedIndex) ? green : gray);
+        SDL_Texture *optionTexture = SDL_CreateTextureFromSurface(renderer, optionSurface);
+        SDL_RenderCopy(renderer, optionTexture, NULL, &optionRect);
+        SDL_FreeSurface(optionSurface);
+
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    }
+
+    SDL_RenderPresent(renderer);
+    handleKeyEvents(&pauseMenuState);
+    return 0;
+}
+
+int renderInput() {
+    puts("This feature does not work yet");
+    return 0;
+}
 
 int renderBackground(char *imagePath) {
     if (!fileExists(imagePath)) {
