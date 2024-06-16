@@ -1,0 +1,304 @@
+title: "球場冒險"
+author: "宇"
+description: "一個發生在籃球場和公園的互動故事。你的選擇決定結局。"
+characters:
+  - id: mike
+    name: "麥克"
+    description: "一位熱愛籃球的球員。"
+    sprite: "images/mike_sprite.png"
+    mood:
+      happiness: 50
+      friendship: 50
+  - id: jess
+    name: "潔西"
+    description: "一位喜愛自然的公園愛好者。"
+    sprite: "images/jess_sprite.png"
+    mood:
+      happiness: 50
+      friendship: 50
+  - id: tony
+    name: "托尼"
+    description: "一位從公園汲取靈感的當地藝術家。"
+    sprite: "images/tony_sprite.png"
+    mood:
+      happiness: 50
+      friendship: 50
+scenes:
+  - id: 1
+    name: "籃球場"
+    description: "你在籃球場，準備投籃。"
+    background: "images/basketball_court.png"
+    options:
+      - description: "打籃球"
+        next_scene: 2
+      - description: "去公園"
+        next_scene: 3
+  - id: 2
+    name: "打籃球"
+    description: "你開始打籃球。麥克加入了你。"
+    background: "images/basketball_court.png"
+    characters:
+      - id: mike
+        position: "left"
+    options:
+      - description: "與麥克聊天"
+        next_scene: 4
+      - description: "繼續打球"
+        next_scene: 5
+  - id: 3
+    name: "公園"
+    description: "公園很寧靜，有幾個人在散步。"
+    background: "images/park.png"
+    characters:
+      - id: jess
+        position: "left"
+      - id: tony
+        position: "right"
+    options:
+      - description: "和潔西聊天"
+        next_scene: 6
+      - description: "和托尼聊天"
+        next_scene: 7
+  - id: 4
+    name: "與麥克對話"
+    description: "你開始和麥克交談。"
+    background: "images/basketball_court.png"
+    characters:
+      - id: mike
+        position: "left"
+    dialogue:
+      speaker: "麥克"
+      portrait: "images/mike.png"
+      text: "嘿！想組隊打一場嗎？"
+    options:
+      - description: "好啊，一起玩！"
+        next_scene: 8
+      - description: "現在不想。"
+        next_scene: 9
+  - id: 5
+    name: "單獨打球"
+    description: "你繼續單獨打球。一個神秘人物走近了。"
+    background: "images/basketball_court.png"
+    characters:
+      - id: tony
+        position: "right"
+    dialogue:
+      speaker: "托尼"
+      portrait: "images/tony.png"
+      text: "你打得不錯。想學個新技巧嗎？"
+    options:
+      - description: "學習技巧"
+        next_scene: 10
+      - description: "沒興趣"
+        next_scene: 9
+  - id: 6
+    name: "與潔西對話"
+    description: "你和潔西聊起來。"
+    background: "images/park.png"
+    characters:
+      - id: jess
+        position: "left"
+    dialogue:
+      speaker: "潔西"
+      portrait: "images/jess.png"
+      text: "嗨！我愛這裡的寧靜。你呢？"
+    options:
+      - description: "我也愛這裡。"
+        next_scene: 11
+      - description: "我更喜歡籃球場。"
+        next_scene: 12
+  - id: 7
+    name: "與托尼對話"
+    description: "你開始和托尼交談。"
+    background: "images/park.png"
+    characters:
+      - id: tony
+        position: "right"
+    dialogue:
+      speaker: "托尼"
+      portrait: "images/tony.png"
+      text: "嘿！我正在畫風景。想看看嗎？"
+    options:
+      - description: "當然！"
+        next_scene: 13
+      - description: "改天吧。"
+        next_scene: 14
+  - id: 8
+    name: "與麥克比賽"
+    description: "你和麥克進行了一場有趣的比賽。你們感覺更親近了。"
+    background: "images/basketball_court.png"
+    characters:
+      - id: mike
+        position: "left"
+    options:
+      - description: "賽後聊天"
+        next_scene: 15
+      - description: "說再見"
+        next_scene: 16
+  - id: 9
+    name: "走開"
+    description: "你走開了，對自己的決定感到不確定。"
+    background: "images/basketball_court.png"
+    options:
+      - description: "去公園"
+        next_scene: 3
+      - description: "離開這裡"
+        next_scene: 16
+  - id: 10
+    name: "學習技巧"
+    description: "托尼教你一個很酷的技巧。你感覺更有技巧了。"
+    background: "images/basketball_court.png"
+    characters:
+      - id: tony
+        position: "right"
+    options:
+      - description: "感謝托尼"
+        next_scene: 15
+      - description: "練習技巧"
+        next_scene: 5
+  - id: 11
+    name: "愉快的聊天"
+    description: "你和潔西愉快地聊著。你感到放鬆。"
+    background: "images/park.png"
+    characters:
+      - id: jess
+        position: "left"
+    options:
+      - description: "繼續聊天"
+        next_scene: 17
+      - description: "去散步"
+        next_scene: 18
+  - id: 12
+    name: "不同的興趣"
+    description: "你和潔西意識到你們的興趣不同。"
+    background: "images/park.png"
+    characters:
+      - id: jess
+        position: "left"
+    options:
+      - description: "說再見"
+        next_scene: 16
+      - description: "試著找到共同點"
+        next_scene: 19
+  - id: 13
+    name: "欣賞藝術"
+    description: "你欣賞托尼的素描。你感到受到啟發。"
+    background: "images/park.png"
+    characters:
+      - id: tony
+        position: "right"
+    options:
+      - description: "讚美托尼"
+        next_scene: 20
+      - description: "詢問他的靈感"
+        next_scene: 21
+  - id: 14
+    name: "稍後再見托尼"
+    description: "你決定稍後再和托尼聊。"
+    background: "images/park.png"
+    options:
+      - description: "與潔西聊天"
+        next_scene: 6
+      - description: "在公園散步"
+        next_scene: 18
+  - id: 15
+    name: "友好的聯繫"
+    description: "你感到與新朋友之間的聯繫更緊密了。"
+    background: "images/basketball_court.png"
+    options:
+      - description: "結束一天"
+        next_scene: 22
+  - id: 16
+    name: "一天結束"
+    description: "你決定結束一天。"
+    background: "images/sunset.png"
+    options:
+      - description: "反思這一天"
+        next_scene: 23
+  - id: 17
+    name: "深入的對話"
+    description: "你和潔西進行了深入的對話。"
+    background: "images/park.png"
+    characters:
+      - id: jess
+        position: "left"
+    options:
+      - description: "分享你的想法"
+        next_scene: 24
+  - id: 18
+    name: "在公園散步"
+    description: "你在公園散步，感覺精神焕發。"
+    background: "images/park_path.png"
+    options:
+      - description: "回到籃球場"
+        next_scene: 1
+  - id: 19
+    name: "找到共同點"
+    description: "你和潔西找到了一些共同喜好的事物。"
+    background: "images/park.png"
+    characters:
+      - id: jess
+        position: "left"
+    options:
+      - description: "一起探索"
+        next_scene: 18
+  - id: 20
+    name: "藝術讚美"
+    description: "托尼欣賞你的讚美，感到受到激勵。"
+    background: "images/park.png"
+    characters:
+      - id: tony
+        position: "right"
+    options:
+      - description: "多聊聊藝術"
+        next_scene: 21
+  - id: 21
+    name: "靈感談話"
+    description: "托尼談論他的靈感，你感到受到啟發。"
+    background: "images/park.png"
+    characters:
+      - id: tony
+        position: "right"
+    options:
+      - description: "感謝托尼"
+        next_scene: 15
+  - id: 22
+    name: "一天的結束"
+    description: "一天結束了，感到成就感。"
+    background: "images/sunset.png"
+    options:
+      - description: "反思"
+        next_scene: 23
+  - id: 23
+    name: "反思"
+    description: "你反思這一天的事件。"
+    background: "images/sunset.png"
+    options:
+      - description: "重新開始"
+        next_scene: 1
+items:
+  - id: ball
+    name: "籃球"
+    description: "一個磨損的籃球。"
+    icon: "images/ball_icon.png"
+  - id: sketchbook
+    name: "素描本"
+    description: "托尼的素描本，裡面充滿了畫作。"
+    icon: "images/sketchbook_icon.png"
+backpack:
+  max_items: 5
+  current_items:
+    - ball
+open_dialogue:
+  - scene: 4
+    dialogue:
+      model: "GPT"
+      prompt: "麥克問你是否想組隊打一場。"
+  - scene: 6
+    dialogue:
+      model: "GPT"
+      prompt: "潔西在談論公園的寧靜。"
+  - scene: 7
+    dialogue:
+      model: "GPT"
+      prompt: "托尼向你展示他的素描。"
