@@ -4,6 +4,7 @@
 #include <SDL2/SDL_ttf.h>
 
 #include "game.h"
+#include "save.h"
 #include "utils.h"
 #include "window.h"
 
@@ -29,10 +30,14 @@ SDL_Texture *background;
 SDL_Texture *character;
 SDL_Texture *dialogue;
 
+SDL_Color green = {57, 128, 36};
+SDL_Color white = {255, 255, 255};
+SDL_Color gray = {200, 200, 200};
+
 bool isMainMenuShown = false;
 
 typedef struct {
-    const char **items;
+    char **items;
     int count;
 } Options;
 
@@ -42,9 +47,17 @@ typedef struct {
     bool ended;
 } OptionsState;
 
-const char *options[] = {"Start", "Continue", "Load Save", "Options", "Settings"};
+char *options[] = {"Start", "Continue", "Load Save", "Options", "Exit"};
 Options mainMenuOptions = {options, 5};
 OptionsState mainMenuState = {&mainMenuOptions, 0};
+
+void closeAndExit() {
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+    SDL_Quit();
+    puts("Window closed");
+    return;
+}
 
 void handleKeyEvents(OptionsState *state) {
     if (state->ended != false) {
@@ -126,10 +139,6 @@ int createWindow(char *gameName, int width, int height) {
 int renderMainMenu(char *gameName) {
     isMainMenuShown = true;
 
-    SDL_Color green = {57, 128, 36};
-    SDL_Color white = {255, 255, 255};
-    SDL_Color gray = {200, 200, 200};
-
     SDL_Surface *surface = TTF_RenderText_Solid(titleFont, gameName, white);
     SDL_Texture *surfaceTexture = SDL_CreateTextureFromSurface(renderer, surface);
 
@@ -168,19 +177,143 @@ int renderMainMenu(char *gameName) {
     SDL_RenderPresent(renderer);
     handleKeyEvents(&mainMenuState);
 
+    char *selectedOption = mainMenuOptions.items[mainMenuState.selectedIndex];
+    if (strcmp(selectedOption, "Start")) {
+        return 0;
+    }
+
+    if (strcmp(selectedOption, "Continue")) {
+        int fileCount = 0;
+        getSaveFiles("./../assets/saves", &fileCount);
+        if (fileCount == 0) {
+            puts("No saves found!");
+            return -1;
+        }
+        return 0;
+    }
+
+    if (strcmp(selectedOption, "Load Save")) {
+        renderSavedMenu();
+        return 0;
+    }
+
+    if (strcmp(selectedOption, "Options")) {
+        renderOptions();
+        return 0;
+    }
+
+    if (strcmp(selectedOption, "Exit")) {
+        closeAndExit();
+    }
+
+    return 0;
+}
+
+int renderSavedMenu() {
+    int fileCount = 0;
+    char **saveFileNames = getSaveFiles("./../assets/saves", &fileCount);
+
+    SDL_Rect rect;
+    rect.x = 250;
+    rect.y = 250;
+    rect.w = 200;
+    rect.h = 200;
+
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    SDL_RenderDrawRect(renderer, &rect);
+
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    SDL_RenderPresent(renderer);
+
+    if (fileCount == 0) {
+        puts("No save files found!");
+        return 0;
+    }
+
+    SDL_Rect optionRect;
+
+    Options savedMenuOptions = {saveFileNames, 5};
+    OptionsState savedMenuState = {&savedMenuOptions, 0};
+
+    for (int i = 0; i < fileCount; i++) {
+        optionRect.x =
+            (widthG - TTF_RenderText_Solid(font, savedMenuOptions.items[i], gray)->w) / 2;
+        optionRect.y = 500 + (i * 50);
+        optionRect.w = TTF_RenderText_Solid(font, savedMenuOptions.items[i], gray)->w;
+        optionRect.h = TTF_RenderText_Solid(font, savedMenuOptions.items[i], gray)->h;
+
+        if (i == savedMenuState.selectedIndex) {
+            SDL_SetRenderDrawColor(renderer, green.r, green.g, green.b, 255);
+        } else {
+            SDL_SetRenderDrawColor(renderer, gray.r, gray.g, gray.b, 255);
+        }
+
+        SDL_Surface *optionSurface = TTF_RenderText_Solid(
+            font, savedMenuOptions.items[i], (i == savedMenuState.selectedIndex) ? green : gray);
+        SDL_Texture *optionTexture = SDL_CreateTextureFromSurface(renderer, optionSurface);
+        SDL_RenderCopy(renderer, optionTexture, NULL, &optionRect);
+        SDL_FreeSurface(optionSurface);
+
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    }
+
+    SDL_RenderPresent(renderer);
+    handleKeyEvents(&savedMenuState);
     return 0;
 }
 
 int renderPauseMenu() {
+
     if (isMainMenuShown) {
-        puts("window.h::renderPauseMenu::Already at main menu");
+        printf("widnow.h::renderPauseMenu::main menu is being shown");
         return -1;
     }
+
+    SDL_Rect rect;
+    rect.x = 250;
+    rect.y = 250;
+    rect.w = 200;
+    rect.h = 200;
+
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    SDL_RenderDrawRect(renderer, &rect);
+
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    SDL_RenderPresent(renderer);
+
+    SDL_Rect optionRect;
+    char *option[] = {"Resume", "Quick Save", "Load Save", "Exit"};
+    Options pauseMenuOptions = {option, 4};
+    OptionsState pauseMenuState = {&pauseMenuOptions, 0};
+
+    for (int i = 0; i < pauseMenuOptions.count; i++) {
+        optionRect.x =
+            (widthG - TTF_RenderText_Solid(font, pauseMenuOptions.items[i], gray)->w) / 2;
+        optionRect.y = 500 + (i * 50);
+        optionRect.w = TTF_RenderText_Solid(font, pauseMenuOptions.items[i], gray)->w;
+        optionRect.h = TTF_RenderText_Solid(font, pauseMenuOptions.items[i], gray)->h;
+
+        if (i == pauseMenuState.selectedIndex) {
+            SDL_SetRenderDrawColor(renderer, green.r, green.g, green.b, 255);
+        } else {
+            SDL_SetRenderDrawColor(renderer, gray.r, gray.g, gray.b, 255);
+        }
+
+        SDL_Surface *optionSurface = TTF_RenderText_Solid(
+            font, pauseMenuOptions.items[i], (i == pauseMenuState.selectedIndex) ? green : gray);
+        SDL_Texture *optionTexture = SDL_CreateTextureFromSurface(renderer, optionSurface);
+        SDL_RenderCopy(renderer, optionTexture, NULL, &optionRect);
+        SDL_FreeSurface(optionSurface);
+
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    }
+
+    SDL_RenderPresent(renderer);
+    handleKeyEvents(&pauseMenuState);
+
     return 0;
 }
 
-int renderSavedMenu() {}
-int renderSettings() {}
 int renderOptions() {}
 int renderInput() {}
 
@@ -222,11 +355,7 @@ void handleEvent(Game game) {
     while (SDL_PollEvent(&event)) {
         switch (event.type) {
         case SDL_QUIT:
-            SDL_DestroyRenderer(renderer);
-            SDL_DestroyWindow(window);
-            SDL_Quit();
-            puts("Window closed, exiting...");
-            exit(EXIT_SUCCESS);
+            closeAndExit();
             break;
         case SDL_KEYDOWN:
             break;
