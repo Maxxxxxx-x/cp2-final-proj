@@ -12,7 +12,7 @@ struct option long_options[] = {
 };
 
 void printHelp(){
-    printf("Usage: ./engine scirpt.yml\n");
+    printf("Usage: ./engine path/to/your/game\n");
 }
 
 int main(int argc, char **argv){
@@ -31,7 +31,11 @@ int main(int argc, char **argv){
                 return 1;
         }
     }
-    char *script = argv[1];
+    char *path = argv[1];
+    if (path[strlen(path) - 1] == '/'){
+        path[strlen(path) - 1] = '\0';
+    }
+    char *script = concat(path, "/script.yaml");
     if (!fileExists(script)){
         printf("File %s does not exist!\n", script);
         return 1;
