@@ -2,9 +2,10 @@
 #ifndef _GAME_H
 #define _GAME_H
 
+#include "inventory.h"
 #include "character.h"
-#include "scene.h"
 #include "player.h"
+#include "scene.h"
 
 typedef struct {
     char *name;
@@ -16,7 +17,7 @@ typedef struct {
     int currentScene;
 } Game;
 
-Game initGame(char *name, Player *player, Character *characters, int numCharacters, Scene *scenes, int numScenes);
+Game initGame(char *name, Character *characters, int numCharacters, Scene *scenes, int numScenes, Inventory *playerInventory);
 void startGame(Game *game);
 
 #endif
