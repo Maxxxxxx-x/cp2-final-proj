@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <dirent.h>
 
 #include "save.h"
 #include "../include/cJSON.h"
@@ -86,4 +87,31 @@ void loadGame(Game *game, char *path){
     game->currentScene = cJSON_GetObjectItem(root, "scene")->valueint;
     free(fileContent);
     fclose(file);
+}
+
+char **getSaveFiles(char *path, int *numFiles) {
+    char **files = NULL;
+    *numFiles = 0;
+    DIR *dir = opendir(path);
+    if (dir == NULL) {
+        printf("Error opening directory!\n");
+        return NULL;
+    }
+    struct dirent *entry;
+    while ((entry = readdir(dir)) != NULL){
+        if (strstr(entry->d_name, ".save") != NULL){
+            char filepath[1000];
+            sprintf(filepath, "%s/%s", path, entry->d_name);
+            FILE *file = fopen(filepath, "r");
+            if (file == NULL){
+                continue;
+            }
+            fclose(file);
+            files = realloc(files, (*numFiles + 1) * sizeof(char *));
+            files[*numFiles] = malloc(strlen(entry->d_name) + 1);
+            strcpy(files[*numFiles], entry->d_name);
+            (*numFiles)++;
+        }
+    }
+    return files;
 }
