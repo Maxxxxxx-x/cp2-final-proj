@@ -1,0 +1,54 @@
+# Game Engine
+
+This game engine is designed to empower game creators, especially those outside of the computer science field, to create their own games. The engine provides a set of functionalities that allow creators to design and implement their own game scripts.
+
+## Features
+
+The engine implements the following features:
+
+- Game script parsing: The engine can parse game scripts written in a specific format.
+- Game state management: The engine can manage and save the state of the game.
+- Character and scene management: The engine can manage multiple characters and scenes.
+- Dialogue and option handling: The engine can handle dialogues and options in the game.
+
+## Known Issues
+
+Please be aware of the following known issues:
+
+-
+
+## Precautions
+
+- Please ensure that your game scripts are written in the correct format.
+
+## Script File Format
+
+The game scripts should be written in YAML format. Here is an example of a game script:
+
+yaml
+title: "Court Adventures"
+author: "Jimmy"
+description: "An interactive story set on a basketball court and park. Your choices determine the outcome."
+characters:
+  - id: mike
+    name: "Mike"
+    description: "A passionate basketball player."
+    sprite: "images/mike_sprite.png"
+    mood:
+      happiness: 50
+      friendship: 50
+scenes:
+  - id: 1
+    name: "Basketball Court"
+    description: "You are at the basketball court, ready to shoot some hoops."
+    background: "images/basketball_court.png"
+    options:
+      - description: "Play basketball"
+        next_scene: 2
+      - description: "Go to the park"
+        next_scene: 3
+
+
+- Scene id should increament from 1 by 1
+- The game will start at scene id 1
+- For the option to end game, set next_scene to 1
