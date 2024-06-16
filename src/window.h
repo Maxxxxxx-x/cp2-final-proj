@@ -1,14 +1,28 @@
 #ifndef _WINDOW_H
 #define _WINDOW_H
 
-#include <ncurses.h>
-
 #include "character.h"
+#include "scene.h"
+#include "game.h"
 
-int createWindow(char *gameName, int height, int width);
+int createWindow(Game *game, char *gameName, int height, int width);
 
-void showDialogue(Character character, char *text);
+int renderMainMenu(char *gameName);
+int renderPauseMenu();
+int renderSavedMenu();
+int renderSettings();
+int renderOptions(Scene scene);
+int renderInput();
 
-int promptPlayer(char *text, int optionsCount, char **options);
+int renderBackground(char *imagePath);
+void clearBackground();
+
+int renderCharacter(Character character, CharacterPosition position);
+void clearCharacter();
+
+int renderDialogue(Character character, char *text);
+void clearDialogue();
+
+void handleEvent(Game game);
 
 #endif

@@ -3,6 +3,8 @@
 #include <string.h>
 #include <getopt.h>
 
+#include "window.h"
+
 #include "game.h"
 #include "utils.h"
 
@@ -43,5 +45,8 @@ int main(int argc, char **argv){
     //parse script
     //init game
     //start game
+
+
+
     return 0;
 }

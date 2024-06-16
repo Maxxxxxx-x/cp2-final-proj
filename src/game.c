@@ -20,8 +20,9 @@ Game initGame(char *name, Character *characters, int numCharacters, Scene *scene
     game.scenes = scenes;
     game.numScenes = numScenes;
     game.currentScene = 0;
-    //createWindow(game.name, HEIGHT, WIDTH);
-    //creaateMainMenu(game.name);
+
+    createWindow(&game, game.name, HEIGHT, WIDTH);
+
     return game;
 }
 
