@@ -75,7 +75,7 @@ void destroyCharacter(Character *c) {
 
 // Function to make a character say something
 void say(Character c, char *message) {
-    showDialogue(c, message);
+    //showDialogue(c, message);
 }
 
 // Function to change the happiness of a character
