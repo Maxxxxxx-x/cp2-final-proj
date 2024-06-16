@@ -3,10 +3,10 @@
 
 #include <ncurses.h>
 
-#include "game.h"
 #include "character.h"
+#include "game.h"
 
-int createWindow(char *gameName, int height, int width);
+int createWindow(Game game, char *gameName, int height, int width);
 
 int renderMainMenu(char *gameName);
 int renderPauseMenu();
@@ -27,4 +27,3 @@ void clearDialogue();
 void handleEvent(Game game);
 
 #endif
-
