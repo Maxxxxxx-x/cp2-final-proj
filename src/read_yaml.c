@@ -30,20 +30,6 @@ Dialogue *createEmptyDialogue(){
     return d;
 }
 
-int main() {
-    int num_characters, num_scenes, num_items, num_dialogues;
-    char *title;
-    Character *characters = NULL;
-    Scene *scenes = NULL;
-    Item *items = NULL;
-    Inventory *backpack = NULL;
-    Dialogue *open_dialogue = NULL;
-    load_script("example_game/script_chinese.yaml", &title, characters, &num_characters, scenes, &num_scenes, items, &num_items, backpack, open_dialogue, &num_dialogues);
-
-
-    return 0;
-}
-
 void load_script(char *filename, char **title, Character *characters, int *num_characters, Scene *scenes, int *num_scenes, Item *items, int *num_items, Inventory *backpack, Dialogue *open_dialogue, int *num_dialogues) {
     FILE *file = fopen(filename, "r");
     if (!file) {

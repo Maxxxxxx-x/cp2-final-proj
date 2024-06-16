@@ -60,9 +60,8 @@ void useItem(Player *player, Item *item) {
 }
 
 void showInventory(Player *player) {
-    int i;
     printf("Inventory:\n");
-    for (i = 0; i < player->inventory->numItems; i++){
+    for (int i = 0; i < player->inventory->numItems; i++){
         printf("%s|%d\n", player->inventory->items[i]->name, player->inventory->items[i]->amount);
     }
 }
