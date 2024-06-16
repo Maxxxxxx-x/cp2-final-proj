@@ -5,9 +5,11 @@
 #include "item.h"
 
 typedef struct {
-    Item *items;
+    Item **items;
     int numItems;
     int maxItems;
 } Inventory;
+
+Inventory *createInventory(Item **items, int numItems, int maxItems);
 
 #endif

@@ -4,7 +4,7 @@
 
 #include "scene.h"
 
-Scene *createScene(int id, char *name, char *description, char *background, Item *items, int numItems, CharacterPosition *characters, int numCharacters, Option *options, int numOptions) {
+Scene *createScene(int id, char *name, char *description, char *background, Item *items, int numItems, Character speaker, char *dialogue, CharacterPosition *characters, int numCharacters, Option *options, int numOptions) {
     Scene *s = malloc(sizeof(Scene));
     if (s == NULL) {
         return NULL;
@@ -38,8 +38,20 @@ Scene *createScene(int id, char *name, char *description, char *background, Item
     
     s->items = items;
     s->numItems = numItems;
+
+    s->speaker = speaker;
+
+    s->dialogue = malloc(strlen(dialogue) + 1);
+    if (s->dialogue == NULL) {
+        free(s->background);
+        free(s->description);
+        free(s->name);
+        free(s);
+        return NULL;
+    }
+    strcpy(s->dialogue, dialogue);
     
-    s->characters = malloc(sizeof(Character) * numCharacters);
+    s->characters = malloc(sizeof(CharacterPosition) * numCharacters);
     s->characters = characters;
     s->numCharacters = numCharacters;
     

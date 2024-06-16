@@ -18,19 +18,6 @@ void printHelp(){
 }
 
 int main(int argc, char **argv){
-    Game game;
-    createWindow("Test", 1600, 1200);
-    puts("Window created");
-    renderBackground("./../assets/images/astolfo.jpeg");
-    puts("Background rendered");
-    renderMainMenu("Test Main Menu");
-    puts("Menu rendered");
-    while (1) {
-        handleEvent(game);
-    }
-    return 0;
-
-
     if (argc < 2){
         printHelp();
         return 1;
@@ -50,7 +37,6 @@ int main(int argc, char **argv){
     if (path[strlen(path) - 1] == '/'){
         path[strlen(path) - 1] = '\0';
     }
-
     char *script = strcat(path, "/script.yaml");
     if (!fileExists(script)){
         printf("File %s does not exist!\n", script);
