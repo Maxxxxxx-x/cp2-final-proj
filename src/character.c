@@ -5,6 +5,23 @@
 #include "character.h"
 #include "window.h"
 
+Character *createEmptyCharacter() {
+    Character *c = malloc(sizeof(Character));
+    if (c == NULL) {
+        return NULL;
+    }
+
+    c->happiness = 0;
+    c->friendship = 0;
+
+    c->name = NULL;
+    c->avator = NULL;
+    c->icon = NULL;
+    c->description = NULL;
+
+    return c;
+}
+
 // Function to create a new character
 Character *createCharacter(char *name, char *avator, char *icon, int happiness, int friendship, char *description) {
     Character *c = malloc(sizeof(Character));

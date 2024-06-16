@@ -2,7 +2,51 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "character.h"
 #include "scene.h"
+
+Scene *createEmptyScene() {
+    Scene *s = malloc(sizeof(Scene));
+    if (s == NULL) {
+        return NULL;
+    }
+    
+    s->id = -1;
+    
+    s->name = NULL;
+    s->description = NULL;
+    s->background = NULL;
+    
+    s->items = NULL;
+    s->numItems = 0;
+    
+    s->speaker = *createEmptyCharacter();
+    
+    s->dialogue = NULL;
+    
+    s->characters = NULL;
+    s->numCharacters = 0;
+    
+    s->options = NULL;
+    s->numOptions = 0;
+    
+    return s;
+}
+
+Option *createEmptyOption() {
+    Option *o = malloc(sizeof(Option));
+    if (o == NULL) {
+        return NULL;
+    }
+    
+    o->id = -1;
+    
+    o->description = NULL;
+    
+    o->nextSceneId = -1;
+    
+    return o;
+}
 
 Scene *createScene(int id, char *name, char *description, char *background, Item *items, int numItems, Character speaker, char *dialogue, CharacterPosition *characters, int numCharacters, Option *options, int numOptions) {
     Scene *s = malloc(sizeof(Scene));
