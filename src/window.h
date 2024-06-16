@@ -3,12 +3,28 @@
 
 #include <ncurses.h>
 
+#include "game.h"
 #include "character.h"
 
 int createWindow(char *gameName, int height, int width);
 
-void showDialogue(Character character, char *text);
+int renderMainMenu(char *gameName);
+int renderPauseMenu();
+int renderSavedMenu();
+int renderSettings();
+int renderOptions();
+int renderInput();
 
-int promptPlayer(char *text, int optionsCount, char **options);
+int renderBackground(char *imagePath);
+void clearBackground();
+
+int renderCharacter(Character character, CharacterPosition position);
+void clearCharacter();
+
+int renderDialogue(Character character, char *text);
+void clearDialogue();
+
+void handleEvent(Game game);
 
 #endif
+
